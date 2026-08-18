@@ -24,39 +24,38 @@ void setup() // for configuration of the components
   digitalWrite(ledHallway, LOW);
 }
 
-void loop() // for defining the process 
-{
-  // Lights will start glowing when the button is pressed
-  // LOW indicates that the button is pressed because INPUT_PULLUP is used
-  if (!timerRunning && digitalRead(button) == LOW) {
+// Start the lighting timer when button is pressed
+void startLightingTimer() {
+  timerRunning = true;
+  startTime = millis();
+  digitalWrite(ledPorch, HIGH);
+  digitalWrite(ledHallway, HIGH);
+}
 
-    // Indicate that the lighting timer has started
-    timerRunning = true;
+// Update the timer and control LEDs accordingly
+void updateLightingTimer() {
+  unsigned long elapsedTime = millis() - startTime;
 
-    // To record the current time when the button is pressed
-    startTime = millis();
-
-    // Turn both the porch and hallway lights 'ON'
-    digitalWrite(ledPorch, HIGH);
-    digitalWrite(ledHallway, HIGH);
+  // After 30 seconds, porch light will turn 'OFF' 
+  if (elapsedTime >= 30000) {
+    digitalWrite(ledPorch, LOW);
   }
 
-  // Continue checking the elapsed time while the timer is running
+  // After 60 seconds, hallway light will trun 'OFF' and stop timer
+  if (elapsedTime >= 60000) {
+    digitalWrite(ledHallway, LOW);
+    timerRunning = false;
+  }
+}
+
+void loop() {
+  // Check button press ('LOW' means pressed because of INPUT_PULLUP)
+  if (!timerRunning && digitalRead(button) == LOW) {
+    startLightingTimer();
+  }
+
+  // If timer is running, keep updating lights
   if (timerRunning) {
-
-    // To calculate how much time has passed since the button was pressed
-    unsigned long elapsedTime = millis() - startTime;
-
-    // After 30 seconds, turn the porch light OFF
-    if (elapsedTime >= 30000) {
-      digitalWrite(ledPorch, LOW);
-    }
-
-    // After 60 seconds, turn the hallway light OFF
-    // This also ends the current lighting sequence
-    if (elapsedTime >= 60000) {
-      digitalWrite(ledHallway, LOW);
-      timerRunning = false;
-    }
+    updateLightingTimer();
   }
 }
