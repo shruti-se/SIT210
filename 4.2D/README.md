@@ -7,6 +7,8 @@ This project implements a web-based remote lighting control system using an Ardu
 The web application sends the selected room and ON/OFF state to a Node.js and Express backend. The backend communicates with Blynk Cloud, which sends the command to the Arduino Nano 33 IoT. The Arduino then uses the `controlLight()` function to control the corresponding LED.
 
 ## System Architecture:
+
+```text
 User
   ↓
 Web Interface (HTML/CSS)
@@ -22,7 +24,7 @@ Arduino Nano 33 IoT
 controlLight()
   ↓
 Physical LEDs
-
+```
 ## Hardware Requirements:
 Arduino Nano 33 IoT
 Breadboard
