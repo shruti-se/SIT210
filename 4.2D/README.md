@@ -26,11 +26,11 @@ controlLight()
 Physical LEDs
 ```
 ## Hardware Requirements:
-Arduino Nano 33 IoT
-Breadboard
-3 LEDs
-3 × 220–330 Ω resistors
-Jumper wires
+Arduino Nano 33 IoT, 
+Breadboard,
+3 LEDs,
+3 × 220 Ω resistors,
+Jumper wires,
 USB cable
 
 ## LED Connections: 
